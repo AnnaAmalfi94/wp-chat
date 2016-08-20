@@ -235,15 +235,15 @@ function submitMSG(valid, msg){
         avatar = PUBNUB.$('avatar'),
         presence = PUBNUB.$('presence');
     var channel = 'mchat';
-   var current_user = Auth.getCurrentUser();
-  if ( current_user ) {
+  
     // Assign a random avatar in random color
     avatar.className = 'face-' + ((Math.random() * 13 + 1) >>> 0) + ' color-' + ((Math.random() * 10 + 1) >>> 0);
     var p = PUBNUB.init({
         subscribe_key: 'sub-c-d02c7896-6399-11e6-8de8-02ee2ddab7fe',
         publish_key:   'pub-c-9217d596-d001-46c7-92f2-02e142fc5b60'
     });
-    
+     var current_user = Auth.getCurrentUser();
+  if ( current_user ) {
     p.subscribe({
         channel  : channel,
         callback : function(m) { 
