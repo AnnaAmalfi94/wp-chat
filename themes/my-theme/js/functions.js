@@ -235,17 +235,19 @@ function submitMSG(valid, msg){
         avatar = PUBNUB.$('avatar'),
         presence = PUBNUB.$('presence');
     var channel = 'mchat';
-    
+   var current_user = Auth.getCurrentUser();
+  if ( current_user ) {
     // Assign a random avatar in random color
     avatar.className = 'face-' + ((Math.random() * 13 + 1) >>> 0) + ' color-' + ((Math.random() * 10 + 1) >>> 0);
     var p = PUBNUB.init({
         subscribe_key: 'sub-c-d02c7896-6399-11e6-8de8-02ee2ddab7fe',
         publish_key:   'pub-c-9217d596-d001-46c7-92f2-02e142fc5b60'
     });
+    
     p.subscribe({
         channel  : channel,
         callback : function(m) { 
-            output.innerHTML = '<p><i class="' + m.avatar + '"></i><span>' +  m.text.replace( /[<>]/ig, '' ) + '</span></p>' + output.innerHTML; 
+            output.innerHTML = '<h2>'+ current_user.login +'</h2><p><i class="' + m.avatar + '"></i><span>' +  m.text.replace( /[<>]/ig, '' ) + '</span></p>' + output.innerHTML; 
         },
         presence: function(m){
             if(m.occupancy > 1) {
@@ -255,6 +257,7 @@ function submitMSG(valid, msg){
             }
         }
     });
+    
     p.bind('keyup', input, function(e) {
         (e.keyCode || e.charCode) === 13 && publish()
     });
@@ -266,6 +269,7 @@ function submitMSG(valid, msg){
             x : (input.value='')
         });
     }
+ }
 })();
  
  
