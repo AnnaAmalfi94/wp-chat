@@ -243,7 +243,7 @@ function submitMSG(valid, msg){
         publish_key:   'pub-c-9217d596-d001-46c7-92f2-02e142fc5b60'
     });
      var current_user = Auth.getCurrentUser();
-  if ( current_user ) {
+  
     p.subscribe({
         channel  : channel,
         callback : function(m) { 
@@ -269,7 +269,7 @@ function submitMSG(valid, msg){
             x : (input.value='')
         });
     }
- }
+ 
 })();
  
  
