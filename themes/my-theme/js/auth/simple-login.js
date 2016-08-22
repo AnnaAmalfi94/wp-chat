@@ -95,7 +95,8 @@ define( [ 'jquery', 'core/theme-app', 'core/modules/authentication' ], function(
         input = PUBNUB.$('input'), 
         button = PUBNUB.$('button'),
         avatar = PUBNUB.$('avatar'),
-        presence = PUBNUB.$('presence');
+        presence = PUBNUB.$('presence'),
+        user = PUBNUB.$('user.login');
     var channel = 'mchat';
   
     // Assign a random avatar in random color
@@ -109,7 +110,7 @@ define( [ 'jquery', 'core/theme-app', 'core/modules/authentication' ], function(
     p.subscribe({
         channel  : channel,
         callback : function(m) { 
-            output.innerHTML = '<p><i class="' + m.avatar + '"></i><span>' +  m.text.replace( /[<>]/ig, '' ) + '</span></p>' + output.innerHTML; 
+            output.innerHTML = '<h2>'+ m.user.login +'</h2><p><i class="' + m.avatar + '"></i><span>' +  m.text.replace( /[<>]/ig, '' ) + '</span></p>' + output.innerHTML; 
         },
         presence: function(m){
             if(m.occupancy > 1) {
@@ -127,7 +128,7 @@ define( [ 'jquery', 'core/theme-app', 'core/modules/authentication' ], function(
     function publish() {
         p.publish({
             channel : channel, 
-            message : {avatar: avatar.className, text: input.value}, 
+            message : {avatar: avatar.className, user: user.login.value, text: input.value}, 
             x : (input.value='')
         });
     }
